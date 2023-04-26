@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card my-3 w-50">
+        <article class="card-body">
+            <div class="d-flex flex-row justify-content-center">
+                <img src="<%= assetPath("images/logo-xatena-gold.png") %>" class="img-fluid m-3" style="width: 30%;">
+            </div>
+            <div class="d-flex flex-row justify-content-center">
+                <p>
+                    <a href="/auth/google" class="btn btn-block btn-outline-info"> <i class="fab fa-google"></i>   Login via
+                        Google</a>
+                    <a href="" class="btn btn-block btn-outline-info"> <i class="fab fa-microsoft"></i>   Login via
+                        Microsoft</a>
+                </p>
+            </div>
+            <hr>
+            <form>
+                <div class="form-group my-3">
+                    <input name="" class="form-control" placeholder="Email" type="email">
+                </div>
+                <div class="form-group my-3">
+                    <input class="form-control" placeholder="******" type="password">
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block"> Login </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <a class="small" href="#">Forgot password?</a>
+                    </div>
+                </div>
+            </form>
+        </article>
+    </div>
+</div>
