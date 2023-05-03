@@ -1,6 +1,7 @@
 package actions
 
 import (
+	"log"
 	"net/http"
 	"sync"
 
@@ -66,12 +67,19 @@ func App() *buffalo.App {
 		app.Use(popmw.Transaction(models.DB))
 		// Setup and use translations:
 		app.Use(translations())
+		app.Use(Authorize)
+		app.Use(SetCurrentUser)
+		err := generate_data()
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		app.GET("/", HomeHandler)
 		// NOTE: this block should go before any resources
 		// that need to be protected by buffalo-goth!
 		auth := app.Group("/auth")
-		auth.GET("/{provider}", buffalo.WrapHandlerFunc(gothic.BeginAuthHandler))
+		authHandler := buffalo.WrapHandlerFunc(gothic.BeginAuthHandler)
+		auth.GET("/{provider}", authHandler)
 		auth.GET("/{provider}/callback", AuthCallback)
 
 		app.GET("/suppliers/show", SuppliersShow)
@@ -83,6 +91,10 @@ func App() *buffalo.App {
 		app.GET("/gpo/create", GpoCreate)
 		app.GET("/gpo/delete", GpoDelete)
 
+		app.Middleware.Skip(Authorize, HomeHandler, LoginShow)
+		auth.Middleware.Skip(Authorize, authHandler, AuthCallback)
+
+		app.GET("/logout", Logout)
 		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory
 	})
 

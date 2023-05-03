@@ -14,10 +14,18 @@
                 <a class="nav-link" href="#">Kontakt</a>
             </li>
         </ul>
-        <div class="ms-auto mx-3">
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Suche" aria-label="Search">
-            </form>
+    </div>
+    <div class="nav-item dropdown mx-4">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= current_user.Email %>
+        </a>
+        <div class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="<%= logoutPath() %>">Logout</a></li>
         </div>
+    </div>
+    <div class="nav-item mx-3">
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Suche" aria-label="Search">
+        </form>
     </div>
 </nav>
