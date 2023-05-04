@@ -1,0 +1,31 @@
+create_table("companies") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("city", "string", {})
+	t.Column("name", "string", {})
+	t.Column("postalnr", "string", {})
+	t.Column("street", "string", {})
+	t.Column("streetnr", "string", {})
+	t.Column("gln", "string", {"null": true})
+	t.Timestamps()
+}
+
+create_table("gpos") {
+	t.Column("id", "uuid", {primary: true})
+	t.Timestamps()
+}
+
+create_table("users") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("provider", "string", {})
+	t.Column("provider_id", "string", {})
+	t.Column("email", "string", {})
+	t.Column("company_id", "uuid", {})
+	t.ForeignKey("company_id", {"companies": ["id"]}, {})
+	t.Timestamps()
+}
+
+create_table("companies_gpos") {
+	t.Column("company_id", "uuid", {})
+	t.Column("gpo_id", "uuid", {})
+	t.PrimaryKey("company_id", "gpo_id")
+}

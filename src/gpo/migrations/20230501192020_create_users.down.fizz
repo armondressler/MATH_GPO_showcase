@@ -1,0 +1,4 @@
+drop_table("users")
+drop_table("companies")
+drop_table("gpos")
+drop_table("companies_gpos")

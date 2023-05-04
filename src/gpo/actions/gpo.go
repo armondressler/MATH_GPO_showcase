@@ -13,6 +13,8 @@ func GpoShow(c buffalo.Context) error {
 
 // GpoList default implementation.
 func GpoList(c buffalo.Context) error {
+	breadcrumbs := [][]string{{"Home", "/home"}, {"GPOs", "/gpo/list"}}
+	c.Set("breadcrumbs", breadcrumbs)
 	return c.Render(http.StatusOK, r.HTML("gpo/list.html"))
 }
 
