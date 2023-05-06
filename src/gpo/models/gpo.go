@@ -11,53 +11,47 @@ import (
 	"github.com/gofrs/uuid"
 )
 
-// Company is used by pop to map your companies database table to your go code.
-type Company struct {
+// Gpo is used by pop to map your gpoes database table to your go code.
+type Gpo struct {
 	ID          uuid.UUID    `json:"id" db:"id"`
 	Name        string       `json:"name" db:"name"`
-	Street      nulls.String `json:"street" db:"street"`
-	Streetnr    nulls.String `json:"streetnr" db:"streetnr"`
-	Gln         nulls.String `json:"gln" db:"gln"`
 	Description nulls.String `json:"description" db:"description"`
-	City        nulls.String `json:"city" db:"city"`
-	Postalnr    nulls.String `json:"postalnr" db:"postalnr"`
 	CreatedAt   time.Time    `json:"created_at" db:"created_at"`
 	UpdatedAt   time.Time    `json:"updated_at" db:"updated_at"`
-	Users       []User       `json:"users,omitempty" has_many:"users"`
-	Gpoes       []Gpo        `json:"gpoes" many_to_many:"companies_gpoes" db:"-"`
+	//Companies   []Company    `json:"companies" many_to_many:"companies_gpos" db:"-"`
 }
 
 // String is not required by pop and may be deleted
-func (c Company) String() string {
-	jc, _ := json.Marshal(c)
-	return string(jc)
+func (g Gpo) String() string {
+	jg, _ := json.Marshal(g)
+	return string(jg)
 }
 
-// Companies is not required by pop and may be deleted
-type Companies []Company
+// Gpoes is not required by pop and may be deleted
+type Gpoes []Gpo
 
 // String is not required by pop and may be deleted
-func (c Companies) String() string {
-	jc, _ := json.Marshal(c)
-	return string(jc)
+func (g Gpoes) String() string {
+	jg, _ := json.Marshal(g)
+	return string(jg)
 }
 
 // Validate gets run every time you call a "pop.Validate*" (pop.ValidateAndSave, pop.ValidateAndCreate, pop.ValidateAndUpdate) method.
 // This method is not required and may be deleted.
-func (c *Company) Validate(tx *pop.Connection) (*validate.Errors, error) {
+func (g *Gpo) Validate(tx *pop.Connection) (*validate.Errors, error) {
 	return validate.Validate(
-		&validators.StringIsPresent{Field: c.Name, Name: "Name"},
+		&validators.StringIsPresent{Field: g.Name, Name: "Name"},
 	), nil
 }
 
 // ValidateCreate gets run every time you call "pop.ValidateAndCreate" method.
 // This method is not required and may be deleted.
-func (c *Company) ValidateCreate(tx *pop.Connection) (*validate.Errors, error) {
+func (g *Gpo) ValidateCreate(tx *pop.Connection) (*validate.Errors, error) {
 	return validate.NewErrors(), nil
 }
 
 // ValidateUpdate gets run every time you call "pop.ValidateAndUpdate" method.
 // This method is not required and may be deleted.
-func (c *Company) ValidateUpdate(tx *pop.Connection) (*validate.Errors, error) {
+func (g *Gpo) ValidateUpdate(tx *pop.Connection) (*validate.Errors, error) {
 	return validate.NewErrors(), nil
 }

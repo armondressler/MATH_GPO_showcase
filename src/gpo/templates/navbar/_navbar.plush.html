@@ -1,23 +1,14 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="max-height: 15vh;">
     <img src="<%= assetPath("images/logo-xatena-gold.png") %>" class="img-fluid m-3" style="width: 5%;">
-    <a class="navbar-brand" href="#">GPO Prototyp</a>
+    <a class="navbar-brand" href="<%= rootPath() %>">GPO Prototyp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="<%= rootPath() %>">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Kontakt</a>
-            </li>
-        </ul>
-    </div>
-    <div class="nav-item dropdown mx-4">
+
+    <div class="nav-item dropdown ms-auto mx-4">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <%= current_user.Email %>
+            <%= current_user.Email %> (<%= current_company.Name %>)
         </a>
         <div class="dropdown-menu dropdown-menu-dark">
             <li><a class="dropdown-item" href="<%= logoutPath() %>">Logout</a></li>

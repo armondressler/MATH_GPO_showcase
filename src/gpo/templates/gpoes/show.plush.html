@@ -1,0 +1,81 @@
+<div class="py-4 mb-2">
+  <div class="float-end">
+    <%= linkTo(editCompanyGpoPath({ company_id: company.ID, gpo_id: gpo.ID }), {class: "btn btn-warning", body: "Anpassen"}) %>
+    <%= linkTo(companyGpoPath({ company_id: company.ID, gpo_id: gpo.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Löschen"}) %>
+  </div>
+</div>
+
+<main class="container">
+<div class="d-flex align-items-center p-3 my-3 rounded shadow-sm">
+    <img class="me-3" src="<%= assetPath("images/cooperation.png") %>" alt="" width="48" height="38">
+    <div class="lh-1">
+    <h1 class="h6 mb-0 lh-1 fs-3 fw-bold"><%= gpo.Name %></h1>
+    <small>Zuletzt aktiv: <%= gpo.UpdatedAt %></small>
+    <%= if (len(gpo.Description.String) > 0) { %>
+        <br>
+        <small>Beschreibung: <%= gpo.Description %></small>
+    <% } %>
+    </div>
+</div>
+
+<div class="d-flex align-content-center flex-wrap">
+  <div class="album py-5 bg-body-tertiary">
+      <div class="container">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+              <div class="col">
+                  <div class="card shadow-sm">
+                      <img src="<%= assetPath("images/membership.png") %>" class="bd-placeholder-img card-img-top">
+                      <div class="card-body">
+                          <p class="card-text">Mitgliederverwaltung</p>
+                          <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                  <button type="button" class="btn btn-sm btn-outline-secondary">Öffnen</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col">
+                  <div class="card shadow-sm">
+                      <img src="<%= assetPath("images/supplier.png") %>" class="bd-placeholder-img card-img-top">
+                      <div class="card-body">
+                          <p class="card-text">Lieferantenmanagement</p>
+                          <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                  <button type="button" class="btn btn-sm btn-outline-secondary">Öffnen</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col">
+                  <div class="card shadow-sm">
+                      <img src="<%= assetPath("images/purchase.png") %>" class="bd-placeholder-img card-img-top">
+                      <div class="card-body">
+                          <p class="card-text">Gemeinschaftsbeschaffung</p>
+                          <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                  <button type="button" class="btn btn-sm btn-outline-secondary">Öffnen</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col">
+                <div class="card shadow-sm">
+                    <img src="<%= assetPath("images/add.png") %>" class="bd-placeholder-img card-img-top">
+                    <div class="card-body">
+                        <p class="card-text">Neue App hinzufügen</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Zum Appstore</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
+</main>

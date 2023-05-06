@@ -1,66 +1,87 @@
 <div class="py-4 mb-2">
-  <h3 class="d-inline-block">Company Details</h3>
 
   <div class="float-end">
-    <%= linkTo(companiesPath(), {class: "btn btn-info"}) { %>
-      Back to all Companies
-    <% } %>
-    <%= linkTo(editCompanyPath({ company_id: company.ID }), {class: "btn btn-warning", body: "Edit"}) %>
-    <%= linkTo(companyPath({ company_id: company.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+    <%= linkTo(editCompanyPath({ company_id: company.ID }), {class: "btn btn-warning", body: "Anpassen"}) %>
+    <%= linkTo(companyPath({ company_id: company.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Löschen"}) %>
   </div>
 </div>
 
 
+<main class="container">
+  <div class="d-flex align-items-center p-3 my-3 rounded shadow-sm">
+    <img class="me-3" src="<%= assetPath("images/company.png") %>" alt="" width="48" height="38">
+    <div class="lh-1">
+      <h1 class="h6 mb-0 lh-1 fs-3 fw-bold"><%= company.Name %></h1>
+      <small><%= company.Street %> <%= company.Streetnr %>, <%= company.Postalnr %> <%= company.City %></small><br>
+      <small>Zuletzt aktiv: <%= company.UpdatedAt %></small>
+      <%= if (len(company.Description.String) > 0) { %>
+        <br>
+        <small>Beschreibung: <%= company.Description %></small>
+      <% } %>
+    </div>
+  </div>
 
-<ul class="list-group mb-2 ">
+  <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <h6 class="border-bottom pb-2 mb-0">Letzte Updates</h6>
+    <div class="d-flex text-body-secondary pt-3">
+      <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff" data-darkreader-inline-fill="" style="--darkreader-inline-fill:#33a2ff;"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em" data-darkreader-inline-fill="" style="--darkreader-inline-fill:#33a2ff;">32x32</text></svg>
+      <p class="pb-3 mb-0 small lh-sm border-bottom">
+        <strong class="d-block text-gray-dark">@ruedi.mueller</strong>
+        Einladung für User armon.dressler@gmail.com versendet
+      </p>
+    </div>
+    <div class="d-flex text-body-secondary pt-3">
+      <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#e83e8c" data-darkreader-inline-fill="" style="--darkreader-inline-fill:#e94a93;"></rect><text x="50%" y="50%" fill="#e83e8c" dy=".3em" data-darkreader-inline-fill="" style="--darkreader-inline-fill:#e94a93;">32x32</text></svg>
+      <p class="pb-3 mb-0 small lh-sm border-bottom">
+        <strong class="d-block text-gray-dark">@markus.gruen</strong>
+        Unternehmensdetails angepasst
+      </p>
+    </div>
 
+    <small class="d-block text-end mt-3">
+      <a href="#">Alle Updates</a>
+    </small>
+  </div>
 
-  <li class="list-group-item pb-1">
-    <label class="small d-block">Name</label>
-    <p class="d-inline-block"><%= company.Name %></p>
-  </li>
+  <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <h6 class="border-bottom pb-2 mb-0">Einkaufsgemeinschaften (<%= len(gpoes) %>)</h6>
+    <%= for (gpo) in gpoes { %>
+      <%= linkTo(companyGpoPath({ company_id: company.ID, gpo_id: gpo.ID }), {class: "text-decoration-none btn d-flex flex-column gpo-list-item"}) { %>
+      <div class="d-flex text-body-secondary pt-3">
+        <img class="me-3" src="<%= assetPath("images/cooperation.png") %>" alt="" width="48" height="44">
+        <div class="pb-3 mb-0 small lh-sm border-bottom w-100 d-flex flex-column align-items-start">
+          <div class="flex-row">
+            <strong class="text-gray-dark"><%= gpo.Name %></strong>
+          </div>
+          <span class="flex-row"><%= gpo.Description %></span>
+        </div>
+      </div>
+      <% } %>
+    <% } %>
+    <small class="d-block text-end mt-3">
+      <a href="#">Zur Verwaltung der Einkaufsgemeinschaften</a>
+    </small>
+  </div>
 
+  <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <h6 class="border-bottom pb-2 mb-0">Mitarbeiter (<%= len(employees) %>)</h6>
 
-
-  <li class="list-group-item pb-1">
-    <label class="small d-block">Street</label>
-    <p class="d-inline-block"><%= company.Street %></p>
-  </li>
-
-
-
-  <li class="list-group-item pb-1">
-    <label class="small d-block">Streetnr</label>
-    <p class="d-inline-block"><%= company.Streetnr %></p>
-  </li>
-
-
-
-  <li class="list-group-item pb-1">
-    <label class="small d-block">Gln</label>
-    <p class="d-inline-block"><%= company.Gln %></p>
-  </li>
-
-
-
-  <li class="list-group-item pb-1">
-    <label class="small d-block">Description</label>
-    <p class="d-inline-block"><%= company.Description %></p>
-  </li>
-
-
-
-  <li class="list-group-item pb-1">
-    <label class="small d-block">City</label>
-    <p class="d-inline-block"><%= company.City %></p>
-  </li>
-
-
-
-  <li class="list-group-item pb-1">
-    <label class="small d-block">Postalnr</label>
-    <p class="d-inline-block"><%= company.Postalnr %></p>
-  </li>
-
-
-</ul>
+  
+    <%= for (employee) in employees { %>
+    <div class="d-flex text-body-secondary pt-3">
+      <img class="me-3" src="<%= assetPath("images/user_small.png") %>" alt="" width="48" height="44">
+      <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+        <div class="d-flex justify-content-between">
+          <strong class="text-gray-dark flex-grow-1"><%= employee.FirstName %> <%= employee.LastName %></strong>
+          <a href="#" class="mx-2">Folgen</a>
+          <a href="mailto:<%= employee.Email %>"><img class="me-3" src="<%= assetPath("images/mail.png") %>" alt="" width="28" height="24"></a>
+        </div>
+        <span class="d-block"><%= employee.Email %></span>
+      </div>
+    </div>
+    <% } %>
+    <small class="d-block text-end mt-3">
+      <a href="#">Zur Mitarbeiterverwaltung</a>
+    </small>
+  </div>
+</main>

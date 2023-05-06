@@ -1,0 +1,8 @@
+<div class="py-4 mb-2">
+  <h3 class="d-inline-block">Edit Gpo</h3>
+</div>
+
+<%= formFor(gpo, {action: gpoPath({ gpo_id: gpo.ID }), method: "PUT"}) { %>
+  <%= partial("gpoes/form.html") %>
+  <%= linkTo(gpoPath({ gpo_id: gpo.ID }), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+<% } %>

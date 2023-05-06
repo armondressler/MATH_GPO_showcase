@@ -69,6 +69,7 @@ func App() *buffalo.App {
 		app.Use(translations())
 		app.Use(Authorize)
 		app.Use(SetCurrentUser)
+		app.Use(SetCurrentCompany)
 		err := generate_data()
 		if err != nil {
 			log.Fatal(err)
@@ -82,22 +83,16 @@ func App() *buffalo.App {
 		auth.GET("/{provider}", authHandler)
 		auth.GET("/{provider}/callback", AuthCallback)
 
-		app.GET("/suppliers/show", SuppliersShow)
-		app.GET("/suppliers/list", SuppliersList)
-		app.GET("/suppliers/create", SuppliersCreate)
 		app.GET("/login/show", LoginShow)
-		app.GET("/gpo/show", GpoShow)
-		app.GET("/gpo/list", GpoList)
-		app.GET("/gpo/create", GpoCreate)
-		app.GET("/gpo/delete", GpoDelete)
-
-		app.Middleware.Skip(Authorize, HomeHandler, LoginShow)
-		auth.Middleware.Skip(Authorize, authHandler, AuthCallback)
 
 		app.GET("/logout", Logout)
 
-		app.Resource("/companies", CompaniesResource{})
+		companiesResource := app.Resource("/companies", CompaniesResource{})
+		companiesResource.Resource("/gpoes", GpoesResource{})
 		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory
+
+		app.Middleware.Skip(Authorize, HomeHandler, LoginShow)
+		auth.Middleware.Skip(Authorize, authHandler, AuthCallback)
 	})
 
 	return app

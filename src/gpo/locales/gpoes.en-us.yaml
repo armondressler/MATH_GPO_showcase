@@ -1,0 +1,6 @@
+- id: "gpo.created.success"
+  translation: "Gpo was successfully created."
+- id: "gpo.updated.success"
+  translation: "Gpo was successfully updated."
+- id: "gpo.destroyed.success"
+  translation: "Gpo was successfully destroyed."

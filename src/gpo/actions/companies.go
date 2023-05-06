@@ -7,6 +7,7 @@ import (
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop/v6"
 	"github.com/gobuffalo/x/responder"
+	"github.com/pkg/errors"
 
 	"gpo/models"
 )
@@ -77,9 +78,22 @@ func (v CompaniesResource) Show(c buffalo.Context) error {
 	if err := tx.Find(company, c.Param("company_id")); err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
+	addBreadcrumbs(c)
 
 	return responder.Wants("html", func(c buffalo.Context) error {
 		c.Set("company", company)
+
+		employees, err := GetEmployees(company.ID)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		c.Set("employees", employees)
+
+		gpoes, err := GetGPOs(company.ID)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		c.Set("gpoes", gpoes)
 
 		return c.Render(http.StatusOK, r.HTML("companies/show.plush.html"))
 	}).Wants("json", func(c buffalo.Context) error {

@@ -4,7 +4,7 @@
         <% let i = 0 %>
         <%= for (k, crumb) in breadcrumbs { %>
             <%= if (i == len(breadcrumbs)) { %>
-                <li class="breadcrumb-item active" aria-current="page">
+                <li class="breadcrumb-item" aria-current="page">
                     <%= crumb[0] %>
                 </li>
             <% } else { %>

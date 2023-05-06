@@ -28,6 +28,7 @@ CREATE TABLE public.companies (
     id uuid NOT NULL,
     city character varying(255) NOT NULL,
     name character varying(255) NOT NULL,
+    description text,
     postalnr character varying(255) NOT NULL,
     street character varying(255) NOT NULL,
     streetnr character varying(255) NOT NULL,
@@ -40,10 +41,11 @@ CREATE TABLE public.companies (
 ALTER TABLE public.companies OWNER TO postgres;
 
 --
--- Name: companies_gpos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: companies_gpoes; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.companies_gpos (
+CREATE TABLE public.companies_gpoes (
+    id uuid NOT NULL,
     company_id uuid NOT NULL,
     gpo_id uuid NOT NULL,
     created_at timestamp without time zone NOT NULL,
@@ -51,20 +53,22 @@ CREATE TABLE public.companies_gpos (
 );
 
 
-ALTER TABLE public.companies_gpos OWNER TO postgres;
+ALTER TABLE public.companies_gpoes OWNER TO postgres;
 
 --
--- Name: gpos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: gpoes; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.gpos (
+CREATE TABLE public.gpoes (
     id uuid NOT NULL,
+    name character varying(255) NOT NULL,
+    description text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
 
 
-ALTER TABLE public.gpos OWNER TO postgres;
+ALTER TABLE public.gpoes OWNER TO postgres;
 
 --
 -- Name: schema_migration; Type: TABLE; Schema: public; Owner: postgres
@@ -86,6 +90,8 @@ CREATE TABLE public.users (
     provider character varying(255) NOT NULL,
     provider_id character varying(255) NOT NULL,
     email character varying(255) NOT NULL,
+    first_name character varying(255) NOT NULL,
+    last_name character varying(255) NOT NULL,
     company_id uuid NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -95,11 +101,11 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- Name: companies_gpos companies_gpos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: companies_gpoes companies_gpoes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.companies_gpos
-    ADD CONSTRAINT companies_gpos_pkey PRIMARY KEY (company_id, gpo_id);
+ALTER TABLE ONLY public.companies_gpoes
+    ADD CONSTRAINT companies_gpoes_pkey PRIMARY KEY (company_id, gpo_id);
 
 
 --
@@ -111,11 +117,11 @@ ALTER TABLE ONLY public.companies
 
 
 --
--- Name: gpos gpos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: gpoes gpoes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.gpos
-    ADD CONSTRAINT gpos_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.gpoes
+    ADD CONSTRAINT gpoes_pkey PRIMARY KEY (id);
 
 
 --

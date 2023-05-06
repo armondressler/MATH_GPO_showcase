@@ -58,7 +58,7 @@ func AuthCallback(c buffalo.Context) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	return c.Redirect(302, "/gpo/show")
+	return c.Redirect(302, "/")
 }
 
 func AuthDestroy(c buffalo.Context) error {
@@ -77,9 +77,25 @@ func SetCurrentUser(next buffalo.Handler) buffalo.Handler {
 			tx := c.Value("tx").(*pop.Connection)
 			err := tx.Find(u, uid)
 			if err != nil {
-				return errors.WithStack(err)
+				c.Session().Delete("current_user_id")
+				return next(c)
 			}
 			c.Set("current_user", u)
+		}
+		return next(c)
+	}
+}
+
+func SetCurrentCompany(next buffalo.Handler) buffalo.Handler {
+	return func(c buffalo.Context) error {
+		if user := c.Value("current_user"); user != nil {
+			company := &models.Company{}
+			cid := user.(*models.User).CompanyID
+			err := models.DB.Find(company, cid)
+			if err != nil {
+				return fmt.Errorf("could not determine company of user %s", user.(*models.User).Email)
+			}
+			c.Set("current_company", company)
 		}
 		return next(c)
 	}

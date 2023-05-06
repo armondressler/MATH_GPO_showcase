@@ -15,6 +15,8 @@ type User struct {
 	CreatedAt  time.Time `db:"created_at"`
 	UpdatedAt  time.Time `db:"updated_at"`
 	Email      string    `db:"email"`
+	FirstName  string    `db:"first_name"`
+	LastName   string    `db:"last_name"`
 	Provider   string    `db:"provider"`
 	ProviderID string    `db:"provider_id"`
 	CompanyID  uuid.UUID `db:"company_id"`
