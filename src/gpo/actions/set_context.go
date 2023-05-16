@@ -34,3 +34,16 @@ func setGpo(c buffalo.Context) error {
 	c.Set("gpo", gpo)
 	return nil
 }
+
+func setContractor(c buffalo.Context) error {
+	tx, ok := c.Value("tx").(*pop.Connection)
+	if !ok {
+		return fmt.Errorf("no transaction found")
+	}
+	contractor := &models.Contractor{}
+	if err := tx.Eager().Find(contractor, c.Param("contractor_id")); err != nil {
+		return c.Error(http.StatusNotFound, err)
+	}
+	c.Set("contractor", contractor)
+	return nil
+}

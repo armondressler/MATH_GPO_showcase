@@ -4,12 +4,12 @@
         <% let i = 0 %>
         <%= for (k, crumb) in breadcrumbs { %>
             <%= if (i == len(breadcrumbs)) { %>
-                <li class="breadcrumb-item" aria-current="page">
+                <li class="breadcrumb-item fw-semibold text-muted" aria-current="page">
                     <%= crumb[0] %>
                 </li>
             <% } else { %>
                 <li class="breadcrumb-item">
-                    <a class="link-body-emphasis fw-semibold text-decoration-none" href="<%= crumb[1] %>"><%= crumb[0] %></a>
+                    <a class="link-body-emphasis fw-semibold text-muted text-decoration-none" href="<%= crumb[1] %>"><%= crumb[0] %></a>
                 </li>                
             <% } %>
             <% let i = i + 1 %>

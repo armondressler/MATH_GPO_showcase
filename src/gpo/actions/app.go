@@ -82,17 +82,21 @@ func App() *buffalo.App {
 		authHandler := buffalo.WrapHandlerFunc(gothic.BeginAuthHandler)
 		auth.GET("/{provider}", authHandler)
 		auth.GET("/{provider}/callback", AuthCallback)
+		app.Resource("/contractors", ContractorsResource{})
 
 		app.GET("/login/show", LoginShow)
-
 		app.GET("/logout", Logout)
 
 		companiesResource := app.Resource("/companies", CompaniesResource{})
-		companiesResource.Resource("/gpoes", GpoesResource{})
-		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory
+		gpoResource := companiesResource.Resource("/gpoes", GpoesResource{})
+		gpoResource.GET("/membership/show", MembershipShow)
+		gpoResource.GET("/suppliermanagement/show", SuppliermanagementShow)
+		app.Resource("/suppliers", SuppliersResource{})
 
 		app.Middleware.Skip(Authorize, HomeHandler, LoginShow)
 		auth.Middleware.Skip(Authorize, authHandler, AuthCallback)
+
+		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory
 	})
 
 	return app

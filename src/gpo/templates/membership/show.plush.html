@@ -1,0 +1,213 @@
+<div class="d-flex flex-row justify-content-evenly">
+    <div class="p-3 bg-body rounded shadow-sm flex-fill m-3">
+        <h6 class="border-bottom pb-2">Mitgliederverwaltung</h6>
+        <div class="container mt-2">
+            <div class="row">
+                <div class="col-8">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#inviteXatenaMemberModal">Xatena Mitglied einladen</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#inviteExternalMemberModal">Externes Mitglied einladen</button>
+                </div>
+                <div class="modal fade" id="inviteXatenaMemberModal" tabindex="-1"
+                    aria-labelledby="inviteMemberModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="inviteMemberModalLabel">Neues Mitglied</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-auto">
+                                        <label for="inputSearch" class="col-form-label">Xatena ID</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input type="text" id="inviteXatenaMemberModal-inputSearch" class="form-control"
+                                            aria-describedby="inputSearchInline">
+                                    </div>
+                                    <div class="col-auto">
+                                        <span id="inputSearchInline" class="form-text">
+                                            Einladungen müssen von der Gegenseite akzeptiert werden.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                                <div id="inviteXatenaMemberModal-search-results">
+                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Abbrechen</button>
+                                <button type="button" id="inviteXatenaMemberModal-btn-invite" class="btn btn-primary">Einladen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="inviteExternalMemberModal" tabindex="-1"
+                    aria-labelledby="inviteMemberModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="inviteMemberModalLabel">Neues Mitglied</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="exampleInputEmail1" class="form-label">Email Adresse</label>
+                                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                                aria-describedby="emailHelp">
+                                            <div id="emailHelp" class="form-text">Die Einladung sowie initiale
+                                                Logindaten werden
+                                                via Mail versandt.</div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="inputFirstname" class="form-label">Vorname</label>
+                                            <input type="text" class="form-control" id="inputFirstname">
+                                        </div>
+                                        <div class="col">
+                                            <label for="inputLastname" class="form-label">Nachname</label>
+                                            <input type="text" class="form-control" id="inputLastname">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="phonenum">Mobile Nr.</label><br />
+                                            <input id="phonenum" type="text" class="form-control"
+                                                placeholder="+41796572211" pattern="^\+\d{11}$">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Abbrechen</button>
+                                    <button type="button" class="btn btn-primary">Einladen</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input mb-3 col">
+                    <input type="text" class="form-control" placeholder="Nach Name oder Email suchen">
+                </div>
+            </div>
+            <%= for (gpoCompany, Employees) in gpoCompaniesEmployees { %>
+                <div class="accordion accordion-flush" id="accordion-flush-<%= gpoCompany.ID %>">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="accordion-flush-heading-<%= gpoCompany.ID %>">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#accordion-flush-collapse-<%= gpoCompany.ID %>" aria-expanded="false"
+                                aria-controls="accordion-flush-collapse-<%= gpoCompany.ID %>">
+                                <%= gpoCompany.Name %>
+                            </button>
+                        </h2>
+                        <%= for (employee) in Employees { %>
+                            <div id="accordion-flush-collapse-<%= gpoCompany.ID %>" class="accordion-collapse collapse"
+                                aria-labelledby="accordion-flush-heading-<%= gpoCompany.ID %>" data-bs-parent="#accordion-flush-<%= gpoCompany.ID %>">
+                                <div class="accordion-body">
+                                    <div class="container mt-2">
+                                        <div class="row">
+                                            <div class="col-md-auto border-end">
+                                                <img src="<%= assetPath("images/user_small.png") %>" width="48"
+                                                height="44">
+                                            </div>
+                                            <div class="col-3 border-end">
+                                                <%= employee.Email %>
+                                            </div>
+                                            <div class="col-2 border-end" class="role-descriptor">
+                                                <select class="form-select" aria-label="Default select example">
+                                                    <option selected value="0">Mitarbeiter</option>
+                                                    <option value="1">Administrator</option>
+                                                    <option value="2">Berater</option>
+                                                    <option value="3">Inaktiv</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-auto border-end">
+                                                <a href="mailto:<%= employee.Email %>">
+                                                    <img src="<%= assetPath("images/mail.png") %>" width="28"
+                                                    height="24">
+                                                </a>
+                                            </div>
+                                            <div class="col-2 border-end">
+                                                    Zuletzt aktiv: <%= employee.UpdatedAt %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                    </div>
+                </div>
+                <% } %>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            var selected_contractors = [];
+
+            $('#inviteXatenaMemberModal-inputSearch').on("input", function() {
+
+                var mailsearchstring = $("#inviteXatenaMemberModal-inputSearch").val();
+                var queryParams = { mailcontains: mailsearchstring };
+                if (mailsearchstring && mailsearchstring.length > 1) {
+                    $.ajax({
+                    url: '/contractors',
+                    type: 'GET',
+                    contentType: "application/json",
+                    data: queryParams,
+                    success: function(data) {
+                        console.log(data);
+                        selected_contractors = [];
+                        $("#inviteXatenaMemberModal-search-results").html("");
+                        $.each(data, function(index, element) {
+                            var contractor = $(`
+                            <div class="form-check mx-3">
+                                <input class="form-check-input inviteXatenaMemberModal-search-results-checkbox" type="checkbox" contractor-id="${element.ID}">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    ${element.FirstName} ${element.LastName} (${element.Email})
+                                </label>
+                            </div>`);
+                            $("#inviteXatenaMemberModal-search-results").append(contractor);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+                    });
+                }
+            });
+
+            $(document).on('change', ".inviteXatenaMemberModal-search-results-checkbox", function(e){
+                if(this.checked) {
+                    selected_contractors.push($(this).attr("contractor-id"))
+                
+                } else {
+                    let i = selected_contractors.indexOf($(this).attr("contractor-id"));
+                    selected_contractors.splice(i, 1)
+                }
+                console.log(selected_contractors);
+            });
+
+            $('#inviteXatenaMemberModal-btn-invite').click(function() {
+            var gpo_id = "<%= gpo.ID %>";
+            console.log(selected_contractors);
+            $.each(selected_contractors, function(index, contractor_id) {
+                $.ajax({
+                url: '/contractors/' + contractor_id + "?add-to-gpo=" + gpo_id,
+                type: 'PUT',
+                contentType: "application/json",
+                success: function(data) {
+                    console.log(data);
+                },
+                error: function(xhr, status, error) {console.log(error);}
+                });
+            });
+            });
+
+            });
+    </script>

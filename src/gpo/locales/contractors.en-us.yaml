@@ -1,0 +1,6 @@
+- id: "contractor.created.success"
+  translation: "Contractor was successfully created."
+- id: "contractor.updated.success"
+  translation: "Contractor was successfully updated."
+- id: "contractor.destroyed.success"
+  translation: "Contractor was successfully destroyed."

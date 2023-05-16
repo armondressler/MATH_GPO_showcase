@@ -23,6 +23,21 @@ func GetEmployees(company_id uuid.UUID) ([]*models.User, error) {
 	return employees, err
 }
 
+func GetGpoCompanies(gpo_id uuid.UUID) ([]*models.Company, error) {
+	gpo := models.Gpo{}
+	companies := []*models.Company{}
+	err := models.DB.Find(&gpo, gpo_id)
+	if err != nil {
+		return nil, errors.WithStack(fmt.Errorf("get companies of gpo with id %s : %s", gpo_id, err))
+	}
+
+	err = models.DB.RawQuery("select c.* from companies as c join companies_gpoes as cg on cg.company_id = c.id join gpoes as g on g.id = cg.gpo_id where g.id = ?;", gpo_id).All(&companies)
+	if err != nil {
+		return nil, errors.WithStack(fmt.Errorf("get companies of gpo with id %s : %s", gpo_id, err))
+	}
+	return companies, err
+}
+
 func GetGPOs(company_id uuid.UUID) ([]*models.Gpo, error) {
 	company := models.Company{}
 	gpos := []*models.Gpo{}
@@ -36,6 +51,21 @@ func GetGPOs(company_id uuid.UUID) ([]*models.Gpo, error) {
 		return nil, errors.WithStack(fmt.Errorf("get gpos of company with id %s : %s", company_id, err))
 	}
 	return gpos, err
+}
+
+func GetGPOContractors(gpo_id uuid.UUID) ([]*models.Contractor, error) {
+	gpo := models.Gpo{}
+	contractors := []*models.Contractor{}
+	err := models.DB.Find(&gpo, gpo_id)
+	if err != nil {
+		return nil, errors.WithStack(fmt.Errorf("get contractors of gpo with id %s : %s", gpo_id, err))
+	}
+
+	err = models.DB.RawQuery("select c.* from contractors as c join contractors_gpoes as cg on cg.contractor_id = c.id join gpoes as g on g.id = cg.gpo_id where g.id = ?;", gpo_id).All(&contractors)
+	if err != nil {
+		return nil, errors.WithStack(fmt.Errorf("get contractors of gpo with id %s : %s", gpo_id, err))
+	}
+	return contractors, err
 }
 
 func GetAllGPOs() ([]*models.Gpo, error) {

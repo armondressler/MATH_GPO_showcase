@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light" style="max-height: 15vh;">
+<nav class="navbar navbar-expand-lg navbar-light" style="max-height: 15vh;">
     <img src="<%= assetPath("images/logo-xatena-gold.png") %>" class="img-fluid m-3" style="width: 5%;">
     <a class="navbar-brand" href="<%= rootPath() %>">GPO Prototyp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -18,10 +18,10 @@
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Suche" aria-label="Search">
         </form>
-    </div>
+    </div>    
 </nav>
 <%= if (breadcrumbs) { %>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="max-height: 3vh;">
+    <nav class="navbar navbar-expand-lg navbar-light pt-2" style="max-height: 3vh;">
         <%= partial("navbar/breadcrumbs.html") %>
     </nav>
 <% } %>

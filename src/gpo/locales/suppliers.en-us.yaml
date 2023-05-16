@@ -1,0 +1,6 @@
+- id: "supplier.created.success"
+  translation: "Supplier was successfully created."
+- id: "supplier.updated.success"
+  translation: "Supplier was successfully updated."
+- id: "supplier.destroyed.success"
+  translation: "Supplier was successfully destroyed."

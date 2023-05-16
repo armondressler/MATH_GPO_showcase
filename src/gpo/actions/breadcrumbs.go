@@ -17,7 +17,15 @@ func addBreadcrumbs(c buffalo.Context) error {
 			return c.Error(503, fmt.Errorf("creating breadcrumbs, no company found in context"))
 		}
 		breadcrumbs = append(breadcrumbs, []string{co.Name, fmt.Sprintf("/companies/%s", co.ID.String())})
+		if gpo := c.Value("gpo"); gpo != nil {
+			gpo, ok := gpo.(*models.Gpo)
+			if !ok {
+				return c.Error(503, fmt.Errorf("creating breadcrumbs, no gpo found in context"))
+			}
+			breadcrumbs = append(breadcrumbs, []string{gpo.Name, fmt.Sprintf("/companies/%s/gpoes/%s", co.ID.String(), gpo.ID.String())})
+		}
 	}
+
 	c.Set("breadcrumbs", breadcrumbs)
 	return nil
 }

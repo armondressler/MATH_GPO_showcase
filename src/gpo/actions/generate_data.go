@@ -185,5 +185,96 @@ func generate_data() error {
 			return errors.WithStack(err)
 		}
 	}
+
+	suppliers := []*models.Supplier{}
+	sup_medtronic := &models.Supplier{
+		Name:        "Medtronic Inc AG",
+		Description: nulls.NewString("Bahnbrechende gesundheitstechnologische Lösungen für die komplexesten und herausforderndsten Erkrankungen."),
+		Gln:         nulls.NewString("0673978000008"),
+	}
+
+	sup_johnson := &models.Supplier{
+		Name:        "Cook Medical Europe Ltd.",
+		Description: nulls.NewString("Medical Devices for Minimally Invasive Procedures"),
+		Gln:         nulls.NewString("0827002226005"),
+	}
+
+	suppliers = append(suppliers, sup_johnson, sup_medtronic)
+	for _, sup := range suppliers {
+		q := tx.Where("name = ?", sup.Name)
+		exists, err := q.Exists("suppliers")
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		if exists {
+			continue
+		}
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		err = tx.Save(sup)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+	}
+
+	contractors := []*models.Contractor{}
+	con_bill := &models.Contractor{
+		Email:     "bill.katzmayer@medsup.ch",
+		FirstName: "Bill",
+		LastName:  "Katzmayer",
+		Gpoes: []models.Gpo{
+			*gpo_octa,
+		},
+	}
+	con_gregor := &models.Contractor{
+		Email:     "gregor.mccormick@medsup.ch",
+		FirstName: "Gregor",
+		LastName:  "McCormick",
+		Gpoes: []models.Gpo{
+			*gpo_octa,
+			*gpo_srk,
+		},
+	}
+	con_valentina := &models.Contractor{
+		Email:     "valentina.mueller@brk.ch",
+		FirstName: "Valentina",
+		LastName:  "Müller",
+		Gpoes:     []models.Gpo{},
+	}
+
+	con_petra := &models.Contractor{
+		Email:     "petra.peters@gruen.ch",
+		FirstName: "Petra",
+		LastName:  "Peters",
+		Gpoes:     []models.Gpo{},
+	}
+
+	con_herbert := &models.Contractor{
+		Email:     "herbert.brauer@red.ch",
+		FirstName: "Herbert",
+		LastName:  "Brauer",
+		Gpoes:     []models.Gpo{},
+	}
+
+	contractors = append(contractors, con_bill, con_gregor, con_valentina, con_petra, con_herbert)
+	for _, contractor := range contractors {
+		q := tx.Where("email = ?", contractor.Email)
+		exists, err := q.Exists("contractors")
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		if exists {
+			continue
+		}
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		err = tx.Save(contractor)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+	}
+
 	return nil
 }

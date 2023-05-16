@@ -56,6 +56,54 @@ CREATE TABLE public.companies_gpoes (
 ALTER TABLE public.companies_gpoes OWNER TO postgres;
 
 --
+-- Name: contractors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.contractors (
+    id uuid NOT NULL,
+    provider character varying(255) NOT NULL,
+    provider_id character varying(255) NOT NULL,
+    email character varying(255) NOT NULL,
+    first_name character varying(255) NOT NULL,
+    last_name character varying(255) NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.contractors OWNER TO postgres;
+
+--
+-- Name: contractors_companies; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.contractors_companies (
+    id uuid NOT NULL,
+    contractor_id uuid NOT NULL,
+    company_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.contractors_companies OWNER TO postgres;
+
+--
+-- Name: contractors_gpoes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.contractors_gpoes (
+    id uuid NOT NULL,
+    contractor_id uuid NOT NULL,
+    gpo_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.contractors_gpoes OWNER TO postgres;
+
+--
 -- Name: gpoes; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -80,6 +128,37 @@ CREATE TABLE public.schema_migration (
 
 
 ALTER TABLE public.schema_migration OWNER TO postgres;
+
+--
+-- Name: suppliers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.suppliers (
+    id uuid NOT NULL,
+    name character varying(255) NOT NULL,
+    description text,
+    gln text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.suppliers OWNER TO postgres;
+
+--
+-- Name: suppliers_gpoes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.suppliers_gpoes (
+    id uuid NOT NULL,
+    supplier_id uuid NOT NULL,
+    gpo_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.suppliers_gpoes OWNER TO postgres;
 
 --
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
@@ -117,6 +196,30 @@ ALTER TABLE ONLY public.companies
 
 
 --
+-- Name: contractors_companies contractors_companies_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contractors_companies
+    ADD CONSTRAINT contractors_companies_pkey PRIMARY KEY (contractor_id, company_id);
+
+
+--
+-- Name: contractors_gpoes contractors_gpoes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contractors_gpoes
+    ADD CONSTRAINT contractors_gpoes_pkey PRIMARY KEY (contractor_id, gpo_id);
+
+
+--
+-- Name: contractors contractors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contractors
+    ADD CONSTRAINT contractors_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: gpoes gpoes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -130,6 +233,22 @@ ALTER TABLE ONLY public.gpoes
 
 ALTER TABLE ONLY public.schema_migration
     ADD CONSTRAINT schema_migration_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: suppliers_gpoes suppliers_gpoes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.suppliers_gpoes
+    ADD CONSTRAINT suppliers_gpoes_pkey PRIMARY KEY (supplier_id, gpo_id);
+
+
+--
+-- Name: suppliers suppliers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.suppliers
+    ADD CONSTRAINT suppliers_pkey PRIMARY KEY (id);
 
 
 --
