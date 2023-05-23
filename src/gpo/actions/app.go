@@ -91,7 +91,8 @@ func App() *buffalo.App {
 		gpoResource := companiesResource.Resource("/gpoes", GpoesResource{})
 		gpoResource.GET("/membership/show", MembershipShow)
 		gpoResource.GET("/suppliermanagement/show", SuppliermanagementShow)
-		app.Resource("/suppliers", SuppliersResource{})
+		supplierResource := gpoResource.Resource("/suppliers", SuppliersResource{})
+		supplierResource.Resource("/supplierreviews", SupplierreviewsResource{})
 
 		app.Middleware.Skip(Authorize, HomeHandler, LoginShow)
 		auth.Middleware.Skip(Authorize, authHandler, AuthCallback)

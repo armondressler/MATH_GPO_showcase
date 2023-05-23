@@ -47,3 +47,16 @@ func setContractor(c buffalo.Context) error {
 	c.Set("contractor", contractor)
 	return nil
 }
+
+func setSupplier(c buffalo.Context) error {
+	tx, ok := c.Value("tx").(*pop.Connection)
+	if !ok {
+		return fmt.Errorf("no transaction found")
+	}
+	supplier := &models.Supplier{}
+	if err := tx.Eager().Find(supplier, c.Param("supplier_id")); err != nil {
+		return c.Error(http.StatusNotFound, err)
+	}
+	c.Set("supplier", supplier)
+	return nil
+}

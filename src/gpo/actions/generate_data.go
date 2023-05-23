@@ -193,13 +193,31 @@ func generate_data() error {
 		Gln:         nulls.NewString("0673978000008"),
 	}
 
-	sup_johnson := &models.Supplier{
+	sup_cook := &models.Supplier{
 		Name:        "Cook Medical Europe Ltd.",
 		Description: nulls.NewString("Medical Devices for Minimally Invasive Procedures"),
 		Gln:         nulls.NewString("0827002226005"),
 	}
 
-	suppliers = append(suppliers, sup_johnson, sup_medtronic)
+	sup_novartis := &models.Supplier{
+		Name:        "Novartis Schweiz AG",
+		Description: nulls.NewString("Blutgasanalyse und Laborequipment"),
+		Gln:         nulls.NewString("0827003336005"),
+	}
+
+	sup_braunwiler := &models.Supplier{
+		Name:        "Braunwiler GmbH",
+		Description: nulls.NewString("Hersteller von Autoklaven"),
+		Gln:         nulls.NewString("0827003336605"),
+	}
+
+	sup_johnson := &models.Supplier{
+		Name:        "Johnson & Johnson Schweiz AG",
+		Description: nulls.NewString("Vertrieb MedTech"),
+		Gln:         nulls.NewString("0827303336605"),
+	}
+
+	suppliers = append(suppliers, sup_johnson, sup_medtronic, sup_novartis, sup_braunwiler, sup_cook)
 	for _, sup := range suppliers {
 		q := tx.Where("name = ?", sup.Name)
 		exists, err := q.Exists("suppliers")

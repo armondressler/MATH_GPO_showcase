@@ -1,11 +1,248 @@
-<div class="py-4 mb-2">
-  <h3 class="d-inline-block">Suppliers</h3>
-  <div class="float-end">
-    <%= linkTo(newSuppliersPath(), {class: "btn btn-primary"}) { %>
-      Create New Supplier
-    <% } %>
+<div class="d-flex flex-row justify-content-evenly">
+  <div class="p-3 bg-body rounded shadow-sm flex-fill m-3">
+    <h3 class="border-bottom pb-2">Lieferanten</h6>
+      <div class="container mt-2">
+        <div class="row mb-3">
+          <div class="input col-5">
+            <input type="text" class="form-control" placeholder="Nach Name oder GLN suchen">
+          </div>
+          <div class="col ms-auto">
+            <div class="float-end">
+              <%= linkTo(newCompanyGpoSuppliersPath({company_id: company.ID, gpo_id: gpo.ID}), {class: "btn btn-outline-primary"
+                }) { %>
+                Onboarding neuer Lieferant
+                <% } %>
+            </div>
+          </div>
+        </div>
+        <%= for (supplier) in suppliers { %>
+          <div class="accordion accordion-flush" id="accordion-flush-<%= supplier.ID %>">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="accordion-flush-heading-<%= supplier.ID %>">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#accordion-flush-collapse-<%= supplier.ID %>" aria-expanded="false"
+                  aria-controls="accordion-flush-collapse-<%= supplier.ID %>">
+                  <%= supplier.Name %>
+                </button>
+              </h2>
+              <div id="accordion-flush-collapse-<%= supplier.ID %>" class="accordion-collapse collapse"
+                aria-labelledby="accordion-flush-heading-<%= supplier.ID %>"
+                data-bs-parent="#accordion-flush-<%= supplier.ID %>">
+                <div class="accordion-body">
+                  <div class="container mt-1">
+                    <div class="row">
+                      <div class="col-4">
+                        <div>
+                          <%= supplier.Description %>
+                            <br>
+                            <small>
+                              Zuletzt aktiv: <%= supplier.UpdatedAt %>
+                            </small>
+                        </div>
+                      </div>
+                      <div class="col-md-auto border-end py-2">
+                        <a href="mailto:<%= supplier.Description %>">
+                          <img src="<%= assetPath("images/mail.png") %>" width="28"
+                          height="24">
+                        </a>
+                        <a href="mailto:<%= supplier.Description %>">
+                          <img src="<%= assetPath("images/phone.png") %>" width="28"
+                          height="24">
+                        </a>
+                      </div>
+                      <div class="col-3 border-end py-2">
+                        <fieldset class="star-rating mx-2">
+                          <input type="radio" id="star5" name="star-rating" value="5" />
+                          <label for="star5">5 stars</label>
+                          <input type="radio" id="star4" name="star-rating" value="4" />
+                          <label for="star4">4 stars</label>
+                          <input type="radio" id="star3" name="star-rating" value="3" />
+                          <label for="star3">3 stars</label>
+                          <input type="radio" id="star2" name="star-rating" value="2" />
+                          <label for="star2">2 stars</label>
+                          <input type="radio" id="star1" name="star-rating" value="1" />
+                          <label for="star1">1 stars</label>
+                        </fieldset>
+                        <p class="fs-6">(3.5/5)</p>
+                      </div>
+                      <div class="col-4 accordion ms-auto" id="accordionExample">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                              data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                              Bewertungen & Zertifikate
+                            </button>
+                          </h2>
+                        </div>
+                      </div>
+                      <div class="mt-2">
+                        <div>
+                          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body border-bottom border-top border-secondary">
+                              <div class="container py-2">
+                                <div class="row">
+                                  <div class="col-6">
+                                    <p class="fs-6">Qualität</p>
+                                  </div>
+                                  <div class="col">
+                                    <fieldset class="star-rating mx-2">
+                                      <input type="radio" id="star15" name="star-rating1" value="5" />
+                                      <label for="star15">5 stars</label>
+                                      <input type="radio" id="star14" name="star-rating1" value="4" />
+                                      <label for="star14">4 stars</label>
+                                      <input type="radio" id="star13" name="star-rating1" value="3" />
+                                      <label for="star13">3 stars</label>
+                                      <input type="radio" id="star12" name="star-rating1" value="2" />
+                                      <label for="star12">2 stars</label>
+                                      <input type="radio" id="star11" name="star-rating1" value="1" />
+                                      <label for="star11">1 stars</label>
+                                    </fieldset>
+                                    <p class="fs-6">(3.5/5)</p>
+                                  </div>
+                                  <div class="col-md-auto">
+                                    <p class="fs-6">Gewichtung: 50%</p>
+                                  </div>
+                                  <div class="col-md-auto">
+                                    <a href="#">
+                                      <img src="<%= assetPath("images/edit.png") %>" width="28" height="24">
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6">
+                                    <p class="fs-6">Termintreue</p>
+                                  </div>
+                                  <div class="col">
+                                    <fieldset class="star-rating mx-2">
+                                      <input type="radio" id="star25" name="star-rating2" value="5" />
+                                      <label for="star25">5 stars</label>
+                                      <input type="radio" id="star24" name="star-rating2" value="4" />
+                                      <label for="star24">4 stars</label>
+                                      <input type="radio" id="star23" name="star-rating2" value="3" />
+                                      <label for="star23">3 stars</label>
+                                      <input type="radio" id="star22" name="star-rating2" value="2" />
+                                      <label for="star22">2 stars</label>
+                                      <input type="radio" id="star21" name="star-rating2" value="1" />
+                                      <label for="star21">1 stars</label>
+                                    </fieldset>
+                                    <p class="fs-6">(keine Bewertungen)</p>
+                                  </div>
+                                  <div class="col-md-auto">
+                                    <p class="fs-6">Gewichtung: 30%</p>
+                                  </div>
+                                  <div class="col-md-auto">
+                                    <a href="#">
+                                      <img src="<%= assetPath("images/edit.png") %>" width="28" height="24">
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6">
+                                    <p class="fs-6">Support</p>
+                                  </div>
+                                  <div class="col">
+                                    <fieldset class="star-rating mx-2">
+                                      <input type="radio" id="star35" name="star-rating3" value="5" />
+                                      <label for="star35">5 stars</label>
+                                      <input type="radio" id="star34" name="star-rating3" value="4" />
+                                      <label for="star34">4 stars</label>
+                                      <input type="radio" id="star33" name="star-rating3" value="3" />
+                                      <label for="star33">3 stars</label>
+                                      <input type="radio" id="star32" name="star-rating3" value="2" />
+                                      <label for="star32">2 stars</label>
+                                      <input type="radio" id="star31" name="star-rating3" value="1" />
+                                      <label for="star31">1 stars</label>
+                                    </fieldset>
+                                    <p class="fs-6">(1.5/5)</p>
+                                  </div>
+                                  <div class="col-md-auto">
+                                    <p class="fs-6">Gewichtung: 20%</p>
+                                  </div>
+                                  <div class="col-md-auto">
+                                    <a href="#">
+                                      <img src="<%= assetPath("images/edit.png") %>" width="28" height="24">
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-7">
+                                    <button class="btn btn-toggle p-0" data-bs-toggle="collapse"
+                                      data-bs-target="#orders-collapse" aria-expanded="false">
+                                      Zertifikate
+                                    </button>
+                                    <div class="collapse hide" id="orders-collapse">
+                                      <ul class="btn-toggle-nav list-unstyled">
+                                        <li class="container pt-2">
+                                          <div class="row border-bottom border-secondary">
+                                            <p class="fs-6 col">ISO 9001</p>
+                                            <p class="fs-6 col">Gültig bis: 21.12.2023</p>
+                                            <a href="#" class="col">
+                                              <img src="<%= assetPath("images/isocert.png") %>" width="28" height="24">
+                                            </a>
+                                          </div>
+                                        </li>
+                                        <li class="container pt-2">
+                                          <div class="row border-bottom border-secondary">
+                                            <p class="fs-6 col">ISO/IEC 27001</p>
+                                            <p class="fs-6 col">Gültig bis: 1.3.2024</p>
+                                            <a href="#" class="col">
+                                              <img src="<%= assetPath("images/isocert.png") %>" width="28" height="24">
+                                            </a>
+                                          </div>
+                                        </li>
+                                        <li class="container pt-2">
+                                          <div class="row border-bottom border-secondary">
+                                            <p class="fs-6 col">ISO 13485</p>
+                                            <p class="fs-6 col">Gültig bis: 20.6.2024</p>
+                                            <a href="#" class="col">
+                                              <img src="<%= assetPath("images/isocert.png") %>" width="28" height="24">
+                                            </a>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <% } %>
   </div>
 </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <table class="table table-hover table-bordered">
   <thead class="thead-light">
@@ -15,18 +252,26 @@
   <tbody>
     <%= for (supplier) in suppliers { %>
       <tr>
-        <td class="align-middle"><%= supplier.Name %></td>
+        <td class="align-middle">
+          <%= supplier.Name %>
+        </td>
         <td>
           <div class="float-end">
-            <%= linkTo(supplierPath({ supplier_id: supplier.ID }), {class: "btn btn-info", body: "View"}) %>
-            <%= linkTo(editSupplierPath({ supplier_id: supplier.ID }), {class: "btn btn-warning", body: "Edit"}) %>
-            <%= linkTo(supplierPath({ supplier_id: supplier.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+            <%= linkTo(companyGpoSupplierPath({ company_id: company.ID, gpo_id: gpo.ID, supplier_id: supplier.ID }),
+              {class: "btn btn-info" , body: "View" }) %>
+              <%= linkTo(editCompanyGpoSupplierPath({ company_id: company.ID, gpo_id: gpo.ID, supplier_id: supplier.ID
+                }), {class: "btn btn-warning" , body: "Edit" }) %>
+                <%= linkTo(companyGpoSupplierPath({ company_id: company.ID, gpo_id: gpo.ID, supplier_id: supplier.ID }),
+                  {class: "btn btn-danger" , "data-method" : "DELETE" , "data-confirm" : "Are you sure?" ,
+                  body: "Entfernen" }) %>
           </div>
         </td>
       </tr>
-    <% } %>
+      <% } %>
   </tbody>
 </table>
+
+
 
 <div class="text-center">
   <%= paginator(pagination) %>

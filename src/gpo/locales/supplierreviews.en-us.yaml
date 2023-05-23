@@ -1,0 +1,6 @@
+- id: "supplierreview.created.success"
+  translation: "Supplierreview was successfully created."
+- id: "supplierreview.updated.success"
+  translation: "Supplierreview was successfully updated."
+- id: "supplierreview.destroyed.success"
+  translation: "Supplierreview was successfully destroyed."

@@ -7,6 +7,7 @@ import (
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop/v6"
 	"github.com/gobuffalo/x/responder"
+	"github.com/pkg/errors"
 
 	"gpo/models"
 )
@@ -36,6 +37,18 @@ func (v SuppliersResource) List(c buffalo.Context) error {
 	if !ok {
 		return fmt.Errorf("no transaction found")
 	}
+
+	err := setGpo(c)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+
+	err = setCompany(c)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+
+	addBreadcrumbs(c)
 
 	suppliers := &models.Suppliers{}
 
