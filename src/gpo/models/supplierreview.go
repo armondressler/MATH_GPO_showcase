@@ -11,9 +11,17 @@ import (
 
 // Supplierreview is used by pop to map your supplierreviews database table to your go code.
 type Supplierreview struct {
-	ID        uuid.UUID `json:"id" db:"id"`
-	CreatedAt time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
+	ID         uuid.UUID `json:"id" db:"id"`
+	Metric     string    `json:"metric" db:"metric"`
+	MinValue   int       `json:"min_value" db:"min_value"`
+	MaxValue   int       `json:"max_value" db:"max_value"`
+	Value      int       `json:"value" db:"value"`
+	CreatedAt  time.Time `json:"created_at" db:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at" db:"updated_at"`
+	SupplierID uuid.UUID `db:"supplier_id"`
+	Supplier   *Supplier `json:"Supplier,omitempty" belongs_to:"Supplier"`
+	UserID     uuid.UUID `db:"user_id"`
+	User       *User     `json:"User,omitempty" belongs_to:"User"`
 }
 
 // String is not required by pop and may be deleted

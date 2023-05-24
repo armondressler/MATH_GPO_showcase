@@ -1,0 +1,8 @@
+<div class="py-4 mb-2">
+  <h3 class="d-inline-block">Edit Suppliercertificate</h3>
+</div>
+
+<%= formFor(suppliercertificate, {action: suppliercertificatePath({ suppliercertificate_id: suppliercertificate.ID }), method: "PUT"}) { %>
+  <%= partial("suppliercertificates/form.html") %>
+  <%= linkTo(suppliercertificatePath({ suppliercertificate_id: suppliercertificate.ID }), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+<% } %>

@@ -97,6 +97,8 @@ func App() *buffalo.App {
 		app.Middleware.Skip(Authorize, HomeHandler, LoginShow)
 		auth.Middleware.Skip(Authorize, authHandler, AuthCallback)
 
+		app.Resource("/suppliercertificates", SuppliercertificatesResource{})
+		app.Resource("/products", ProductsResource{})
 		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory
 	})
 

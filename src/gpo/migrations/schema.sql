@@ -119,6 +119,25 @@ CREATE TABLE public.gpoes (
 ALTER TABLE public.gpoes OWNER TO postgres;
 
 --
+-- Name: products; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.products (
+    id uuid NOT NULL,
+    name character varying(255) NOT NULL,
+    is_gdsn boolean NOT NULL,
+    gdsn_country_code character varying(255),
+    gdsn_gtin character varying(255),
+    gdsn_gln character varying(255),
+    supplier_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.products OWNER TO postgres;
+
+--
 -- Name: schema_migration; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -128,6 +147,43 @@ CREATE TABLE public.schema_migration (
 
 
 ALTER TABLE public.schema_migration OWNER TO postgres;
+
+--
+-- Name: suppliercertificates; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.suppliercertificates (
+    id uuid NOT NULL,
+    issuer character varying(255) NOT NULL,
+    issued_at timestamp without time zone NOT NULL,
+    expires_at timestamp without time zone NOT NULL,
+    data_link character varying(255) NOT NULL,
+    supplier_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.suppliercertificates OWNER TO postgres;
+
+--
+-- Name: supplierreviews; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.supplierreviews (
+    id uuid NOT NULL,
+    metric character varying(255) NOT NULL,
+    min_value integer NOT NULL,
+    max_value integer NOT NULL,
+    value integer NOT NULL,
+    user_id uuid NOT NULL,
+    supplier_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.supplierreviews OWNER TO postgres;
 
 --
 -- Name: suppliers; Type: TABLE; Schema: public; Owner: postgres
@@ -228,11 +284,35 @@ ALTER TABLE ONLY public.gpoes
 
 
 --
+-- Name: products products_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT products_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: schema_migration schema_migration_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.schema_migration
     ADD CONSTRAINT schema_migration_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: suppliercertificates suppliercertificates_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.suppliercertificates
+    ADD CONSTRAINT suppliercertificates_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: supplierreviews supplierreviews_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.supplierreviews
+    ADD CONSTRAINT supplierreviews_pkey PRIMARY KEY (id);
 
 
 --
@@ -264,6 +344,38 @@ ALTER TABLE ONLY public.users
 --
 
 CREATE UNIQUE INDEX schema_migration_version_idx ON public.schema_migration USING btree (version);
+
+
+--
+-- Name: products products_supplier_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT products_supplier_id_fkey FOREIGN KEY (supplier_id) REFERENCES public.suppliers(id);
+
+
+--
+-- Name: suppliercertificates suppliercertificates_supplier_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.suppliercertificates
+    ADD CONSTRAINT suppliercertificates_supplier_id_fkey FOREIGN KEY (supplier_id) REFERENCES public.suppliers(id);
+
+
+--
+-- Name: supplierreviews supplierreviews_supplier_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.supplierreviews
+    ADD CONSTRAINT supplierreviews_supplier_id_fkey FOREIGN KEY (supplier_id) REFERENCES public.suppliers(id);
+
+
+--
+-- Name: supplierreviews supplierreviews_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.supplierreviews
+    ADD CONSTRAINT supplierreviews_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --

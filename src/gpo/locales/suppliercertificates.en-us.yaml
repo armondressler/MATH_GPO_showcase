@@ -1,0 +1,6 @@
+- id: "suppliercertificate.created.success"
+  translation: "Suppliercertificate was successfully created."
+- id: "suppliercertificate.updated.success"
+  translation: "Suppliercertificate was successfully updated."
+- id: "suppliercertificate.destroyed.success"
+  translation: "Suppliercertificate was successfully destroyed."

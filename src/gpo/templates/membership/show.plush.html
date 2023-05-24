@@ -1,12 +1,12 @@
 <div class="d-flex flex-row justify-content-evenly">
     <div class="p-3 bg-body rounded shadow-sm flex-fill m-3">
-        <h6 class="border-bottom pb-2">Mitgliederverwaltung</h6>
+        <h6 class="border-bottom pb-2 fw-semibold">Mitgliederverwaltung</h6>
         <div class="container mt-2">
             <div class="row">
                 <div class="col-8">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
                         data-bs-target="#inviteXatenaMemberModal">Xatena Mitglied einladen</button>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
                         data-bs-target="#inviteExternalMemberModal">Externes Mitglied einladen</button>
                 </div>
                 <div class="modal fade" id="inviteXatenaMemberModal" tabindex="-1"
@@ -34,12 +34,13 @@
                                     </div>
                                 </div>
                             </div>
-                                <div id="inviteXatenaMemberModal-search-results">
-                                </div>
+                            <div id="inviteXatenaMemberModal-search-results">
+                            </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary"
                                     data-bs-dismiss="modal">Abbrechen</button>
-                                <button type="button" id="inviteXatenaMemberModal-btn-invite" class="btn btn-primary">Einladen</button>
+                                <button type="button" id="inviteXatenaMemberModal-btn-invite"
+                                    class="btn btn-primary">Einladen</button>
                             </div>
                         </div>
                     </div>
@@ -100,92 +101,152 @@
                 <div class="accordion accordion-flush" id="accordion-flush-<%= gpoCompany.ID %>">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="accordion-flush-heading-<%= gpoCompany.ID %>">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            <button class="accordion-button collapsed fw-semibold" type="button"
+                                data-bs-toggle="collapse"
                                 data-bs-target="#accordion-flush-collapse-<%= gpoCompany.ID %>" aria-expanded="false"
                                 aria-controls="accordion-flush-collapse-<%= gpoCompany.ID %>">
                                 <%= gpoCompany.Name %>
                             </button>
                         </h2>
-                        <%= for (employee) in Employees { %>
-                            <div id="accordion-flush-collapse-<%= gpoCompany.ID %>" class="accordion-collapse collapse"
-                                aria-labelledby="accordion-flush-heading-<%= gpoCompany.ID %>" data-bs-parent="#accordion-flush-<%= gpoCompany.ID %>">
-                                <div class="accordion-body">
-                                    <div class="container mt-2">
-                                        <div class="row">
-                                            <div class="col-md-auto border-end">
-                                                <img src="<%= assetPath("images/user_small.png") %>" width="48"
-                                                height="44">
-                                            </div>
-                                            <div class="col-3 border-end">
+                        <div id="accordion-flush-collapse-<%= gpoCompany.ID %>" class="accordion-collapse collapse"
+                            aria-labelledby="accordion-flush-heading-<%= gpoCompany.ID %>"
+                            data-bs-parent="#accordion-flush-<%= gpoCompany.ID %>">
+                            <div class="accordion-body">
+                                <%= for (employee) in Employees { %>
+                                    <div class="row text-body-secondary pt-3 w-100">
+                                        <img class="col-auto me-1" src="<%= assetPath("images/user_small.png") %>"
+                                        alt="" width="48" height="44">
+                                        <div class="col-6 me-auto border-end">
+                                            <strong class="text-gray-dark flex-grow-1">
+                                                <%= employee.FirstName %>
+                                                    <%= employee.LastName %>
+                                            </strong>
+                                            <p>
                                                 <%= employee.Email %>
-                                            </div>
-                                            <div class="col-2 border-end" class="role-descriptor">
-                                                <select class="form-select" aria-label="Default select example">
-                                                    <option selected value="0">Mitarbeiter</option>
-                                                    <option value="1">Administrator</option>
-                                                    <option value="2">Berater</option>
-                                                    <option value="3">Inaktiv</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-auto border-end">
-                                                <a href="mailto:<%= employee.Email %>">
-                                                    <img src="<%= assetPath("images/mail.png") %>" width="28"
-                                                    height="24">
-                                                </a>
-                                            </div>
-                                            <div class="col-2 border-end">
-                                                    Zuletzt aktiv: <%= employee.UpdatedAt %>
-                                            </div>
+                                            </p>
+                                        </div>
+                                        <div class="col-auto border-end" class="role-descriptor">
+                                            <select class="form-select" aria-label="Default select example">
+                                                <option selected value="0">Mitarbeiter</option>
+                                                <option value="1">Administrator</option>
+                                                <option value="2">Berater</option>
+                                                <option value="3">Inaktiv</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-2 border-end">
+                                            <p class="">Zuletzt aktiv: <%= employee.UpdatedAt %>
+                                            </p>
+                                        </div>
+                                        <div class="col-auto ms-auto">
+                                            <a href="#" class="mx-2">Folgen</a>
+                                            <a href="mailto:<%= employee.Email %>"><img class="me-3"
+                                                    src="<%= assetPath("images/mail.png") %>" alt="" width="28"
+                                                height="24"></a>
                                         </div>
                                     </div>
-                                </div>
+                                    <% } %>
                             </div>
-                            <% } %>
+                        </div>
+
                     </div>
                 </div>
                 <% } %>
+                    <%= if (len(gpoContractors)> 0) { %>
+                        <div class="accordion accordion-flush border-top border-secondary"
+                            id="accordion-flush-gpo-contractors">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="accordion-flush-heading-gpo-contractors">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#accordion-flush-collapse-gpo-contractors" aria-expanded="false"
+                                        aria-controls="accordion-flush-collapse-gpo-contractors">
+                                        Berater
+                                    </button>
+                                </h2>
+                                <div id="accordion-flush-collapse-gpo-contractors" class="accordion-collapse collapse"
+                                    aria-labelledby="accordion-flush-heading-gpo-contractors"
+                                    data-bs-parent="#accordion-flush-gpo-contractors">
+                                    <div class="accordion-body container">
+                                        <%= for (gpoContractor) in gpoContractors { %>
+                                            <div class="row text-body-secondary pt-3 w-100">
+                                                <img class="col-auto me-1" src="<%= assetPath("images/contractor.png")
+                                                    %>" alt="" width="48" height="44">
+                                                <div class="col-6 me-auto border-end">
+                                                    <strong class="text-gray-dark flex-grow-1">
+                                                        <%= gpoContractor.FirstName %>
+                                                            <%= gpoContractor.LastName %>
+                                                    </strong>
+                                                    <p>
+                                                        <%= gpoContractor.Email %>
+                                                    </p>
+                                                </div>
+                                                <div class="col-auto border-end" class="role-descriptor">
+                                                    <select class="form-select" aria-label="Default select example">
+                                                        <option value="0">Mitarbeiter</option>
+                                                        <option value="1">Administrator</option>
+                                                        <option selected value="2">Berater</option>
+                                                        <option value="3">Inaktiv</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-2 border-end">
+                                                    <p class="">Zuletzt aktiv: <%= gpoContractor.UpdatedAt %>
+                                                    </p>
+                                                </div>
+                                                <div class="col-auto ms-auto">
+                                                    <a href="#" class="mx-2">Folgen</a>
+                                                    <a href="mailto:<%= gpoContractor.Email %>"><img class="me-3"
+                                                            src="<%= assetPath("images/mail.png") %>" alt="" width="28"
+                                                        height="24"></a>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
         </div>
     </div>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var selected_contractors = [];
 
-            $('#inviteXatenaMemberModal-inputSearch').on("input", function() {
+            $('#inviteXatenaMemberModal-inputSearch').on("input", function () {
 
                 var mailsearchstring = $("#inviteXatenaMemberModal-inputSearch").val();
                 var queryParams = { mailcontains: mailsearchstring };
                 if (mailsearchstring && mailsearchstring.length > 1) {
                     $.ajax({
-                    url: '/contractors',
-                    type: 'GET',
-                    contentType: "application/json",
-                    data: queryParams,
-                    success: function(data) {
-                        console.log(data);
-                        selected_contractors = [];
-                        $("#inviteXatenaMemberModal-search-results").html("");
-                        $.each(data, function(index, element) {
-                            var contractor = $(`
+                        url: '/contractors',
+                        type: 'GET',
+                        contentType: "application/json",
+                        data: queryParams,
+                        success: function (data) {
+                            console.log(data);
+                            selected_contractors = [];
+                            $("#inviteXatenaMemberModal-search-results").html("");
+                            $.each(data, function (index, element) {
+                                var contractor = $(`
                             <div class="form-check mx-3">
                                 <input class="form-check-input inviteXatenaMemberModal-search-results-checkbox" type="checkbox" contractor-id="${element.ID}">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     ${element.FirstName} ${element.LastName} (${element.Email})
                                 </label>
                             </div>`);
-                            $("#inviteXatenaMemberModal-search-results").append(contractor);
-                        });
-                    },
-                    error: function(xhr, status, error) {
-                        console.log(error);
-                    }
+                                $("#inviteXatenaMemberModal-search-results").append(contractor);
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(error);
+                        }
                     });
                 }
             });
 
-            $(document).on('change', ".inviteXatenaMemberModal-search-results-checkbox", function(e){
-                if(this.checked) {
+            $(document).on('change', ".inviteXatenaMemberModal-search-results-checkbox", function (e) {
+                if (this.checked) {
                     selected_contractors.push($(this).attr("contractor-id"))
-                
+
                 } else {
                     let i = selected_contractors.indexOf($(this).attr("contractor-id"));
                     selected_contractors.splice(i, 1)
@@ -193,21 +254,22 @@
                 console.log(selected_contractors);
             });
 
-            $('#inviteXatenaMemberModal-btn-invite').click(function() {
-            var gpo_id = "<%= gpo.ID %>";
-            console.log(selected_contractors);
-            $.each(selected_contractors, function(index, contractor_id) {
-                $.ajax({
-                url: '/contractors/' + contractor_id + "?add-to-gpo=" + gpo_id,
-                type: 'PUT',
-                contentType: "application/json",
-                success: function(data) {
-                    console.log(data);
-                },
-                error: function(xhr, status, error) {console.log(error);}
+            $('#inviteXatenaMemberModal-btn-invite').click(function () {
+                var gpo_id = "<%= gpo.ID %>";
+                console.log(selected_contractors);
+                $.each(selected_contractors, function (index, contractor_id) {
+                    $.ajax({
+                        url: '/contractors/' + contractor_id + "?add-to-gpo=" + gpo_id,
+                        type: 'PUT',
+                        contentType: "application/json",
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (xhr, status, error) { console.log(error); }
+                    });
                 });
-            });
+                window.location.reload();
             });
 
-            });
+        });
     </script>

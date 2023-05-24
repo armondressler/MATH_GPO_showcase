@@ -47,6 +47,43 @@ create_table("suppliers") {
 	t.Timestamps()
 }
 
+create_table("supplierreviews") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("metric", "string", {})
+	t.Column("min_value", "integer", {})
+	t.Column("max_value", "integer", {})
+	t.Column("value", "integer", {})
+	t.Column("user_id", "uuid", {})
+	t.ForeignKey("user_id", {"users": ["id"]}, {})
+	t.Column("supplier_id", "uuid", {})
+	t.ForeignKey("supplier_id", {"suppliers": ["id"]}, {})
+	t.Timestamps()
+}
+
+create_table("products") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("name", "string", {})
+	t.Column("is_gdsn", "bool", {})
+	t.Column("gdsn_country_code", "string", {null: true})
+	t.Column("gdsn_gtin", "string", {null: true})
+	t.Column("gdsn_gln", "string", {null: true})
+	t.Column("supplier_id", "uuid", {})
+	t.ForeignKey("supplier_id", {"suppliers": ["id"]}, {})
+	t.Timestamps()
+}
+
+
+create_table("suppliercertificates") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("issuer", "string", {})
+	t.Column("issued_at", "timestamp", {})
+	t.Column("expires_at", "timestamp", {})
+	t.Column("data_link", "string", {})
+	t.Column("supplier_id", "uuid", {})
+	t.ForeignKey("supplier_id", {"suppliers": ["id"]}, {})
+	t.Timestamps()
+}
+
 create_table("companies_gpoes") {
 	t.Column("id", "uuid", {})
 	t.Column("company_id", "uuid", {})

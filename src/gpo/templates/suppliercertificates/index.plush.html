@@ -1,0 +1,33 @@
+<div class="py-4 mb-2">
+  <h3 class="d-inline-block">Suppliercertificates</h3>
+  <div class="float-end">
+    <%= linkTo(newSuppliercertificatesPath(), {class: "btn btn-primary"}) { %>
+      Create New Suppliercertificate
+    <% } %>
+  </div>
+</div>
+
+<table class="table table-hover table-bordered">
+  <thead class="thead-light">
+    
+    <th>&nbsp;</th>
+  </thead>
+  <tbody>
+    <%= for (suppliercertificate) in suppliercertificates { %>
+      <tr>
+        
+        <td>
+          <div class="float-end">
+            <%= linkTo(suppliercertificatePath({ suppliercertificate_id: suppliercertificate.ID }), {class: "btn btn-info", body: "View"}) %>
+            <%= linkTo(editSuppliercertificatePath({ suppliercertificate_id: suppliercertificate.ID }), {class: "btn btn-warning", body: "Edit"}) %>
+            <%= linkTo(suppliercertificatePath({ suppliercertificate_id: suppliercertificate.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+          </div>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= paginator(pagination) %>
+</div>
